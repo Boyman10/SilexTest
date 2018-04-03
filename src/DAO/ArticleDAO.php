@@ -14,13 +14,13 @@ class ArticleDAO extends DAO
 	 */
 	public function findAll() {
 		$sql = "select * from t_article order by art_id desc";
-		$result = $this->db->fetchAll($sql);
+		$result = $this->getDb()->fetchAll($sql);
 		
 		// Convert query result to an array of domain objects
 		$articles = array();
 		foreach ($result as $row) {
 			$articleId = $row['art_id'];
-			$articles[$articleId] = $this->buildArticle($row);
+			$articles[$articleId] = $this->buildDomainObject($row);
 		}
 		return $articles;
 	}
