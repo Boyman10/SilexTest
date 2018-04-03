@@ -2,26 +2,10 @@
 
 namespace SilexTest\DAO;
 
-use Doctrine\DBAL\Connection;
 use SilexTest\Domain\Article;
 
-class ArticleDAO
+class ArticleDAO extends DAO
 {
-	/**
-	 * Database connection
-	 *
-	 * @var \Doctrine\DBAL\Connection
-	 */
-	private $db;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param \Doctrine\DBAL\Connection The database connection object
-	 */
-	public function __construct(Connection $db) {
-		$this->db = $db;
-	}
 	
 	/**
 	 * Return a list of all articles, sorted by date (most recent first).
@@ -41,17 +25,36 @@ class ArticleDAO
 		return $articles;
 	}
 	
+	
+	/**
+	 * Returns an article matching the supplied id.
+	 *
+	 * @param integer $id
+	 *
+	 * @return \SilexTest\Domain\Article|throws an exception if no matching article is found
+	 */
+	public function find($id) {
+	    $sql = "select * from t_article where art_id=?";
+	    $row = $this->getDb()->fetchAssoc($sql, array($id));
+	    
+	    if ($row)
+	        return $this->buildDomainObject($row);
+	        else
+	            throw new \Exception("No article matching id " . $id);
+	}
+	
+	
 	/**
 	 * Creates an Article object based on a DB row.
 	 *
 	 * @param array $row The DB row containing Article data.
 	 * @return \SilexTest\Domain\Article
 	 */
-	private function buildArticle(array $row) {
-		$article = new Article();
-		$article->setId($row['art_id']);
-		$article->setTitle($row['art_title']);
-		$article->setContent($row['art_content']);
-		return $article;
+	protected function buildDomainObject(array $row) {
+	    $article = new Article();
+	    $article->setId($row['art_id']);
+	    $article->setTitle($row['art_title']);
+	    $article->setContent($row['art_content']);
+	    return $article;
 	}
 }
