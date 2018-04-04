@@ -83,7 +83,7 @@ class CommentDAO extends DAO
     
     /**
      * Saves a comment into the database.
-     *
+     * Using DBAL methods to proceed update/insert
      * @param \SilexTest\Domain\Comment $comment The comment to save
      */
     public function save(Comment $comment) {
