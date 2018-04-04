@@ -7,14 +7,14 @@ use Symfony\Component\HttpFoundation\Request;
 $app->get('/', function () use ($app) {
     $articles = $app['dao.article']->findAll();
     return $app['twig']->render('index.html.twig', array('articles' => $articles));
-})->bind('home');
+})->bind('home');// name of the route
 
 // Article details with comments
 $app->get('/article/{id}', function ($id) use ($app) {
     $article = $app['dao.article']->find($id);
     $comments = $app['dao.comment']->findAllByArticle($id);
     return $app['twig']->render('article.html.twig', array('article' => $article, 'comments' => $comments));
-})->bind('article');
+})->bind('article');// name of the route
 
 // Login form route
 $app->get('/login', function(Request $request) use ($app) {
@@ -22,4 +22,4 @@ $app->get('/login', function(Request $request) use ($app) {
         'error'         => $app['security.last_error']($request),
         'last_username' => $app['session']->get('_security.last_username'),
     ));
-})->bind('login');
+})->bind('login'); // name of the route
