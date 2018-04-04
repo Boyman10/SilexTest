@@ -17,13 +17,13 @@ $app->register(new Silex\Provider\AssetServiceProvider(), array(
 ));
 
 $app->register(new Silex\Provider\SessionServiceProvider());
-$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+$app->register(new Silex\Provider\SecurityServiceProvider(), array( // This will handle session management automatically
     'security.firewalls' => array(
         'secured' => array(
-            'pattern' => '^/',
-            'anonymous' => true,
+            'pattern' => '^/', // firewall against all the application
+            'anonymous' => true, // allows access to anonymous users
             'logout' => true,
-            'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+            'form' => array('login_path' => '/login', 'check_path' => '/login_check'), // authentication methods
             'users' => function () use ($app) {
             return new SilexTest\DAO\UserDAO($app['db']);
             },
