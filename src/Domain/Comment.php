@@ -14,7 +14,7 @@ class Comment
     /**
      * Comment author.
      *
-     * @var string
+     * @var SilexTest\Domain\User
      */
     private $author;
     
@@ -28,7 +28,7 @@ class Comment
     /**
      * Associated article.
      *
-     * @var \MicroCMS\Domain\Article
+     * @var \SilexTest\Domain\Article
      */
     private $article;
     
@@ -45,7 +45,7 @@ class Comment
         return $this->author;
     }
     
-    public function setAuthor($author) {
+    public function setAuthor(User $author) {
         $this->author = $author;
         return $this;
     }
