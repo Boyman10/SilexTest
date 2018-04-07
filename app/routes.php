@@ -4,6 +4,8 @@ use Symfony\Component\HttpFoundation\Request;
 use SilexTest\Domain\Comment;
 use SilexTest\Form\Type\CommentType;
 
+
+
 // Home page
 $app->get('/', function () use ($app) {
     $articles = $app['dao.article']->findAll();
